@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="./assets/img/favicon.png" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #000000;
+      font-family: Arial, sans-serif;
+    }
+    #relogio {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      font-size: 15px;
+      font-family: monospace;
+    }
+    #startBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px 40px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button id="startBtn">Start Fullscreen</button>
+  <div id="relogio" style="display:none;"></div>
+
+  <script>
+    const btn = document.getElementById('startBtn');
+    const relogio = document.getElementById('relogio');
+
+    btn.addEventListener('click', () => {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+      } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen();
+      }
+
+      btn.style.display = 'none';
+      relogio.style.display = 'block';
+      atualizarRelogio();
+      setInterval(atualizarRelogio, 1000);
+    });
+
+    function atualizarRelogio() {
+      const agora = new Date();
+      const horas = String(agora.getHours()).padStart(2, '0');
+      const minutos = String(agora.getMinutes()).padStart(2, '0');
+      const segundos = String(agora.getSeconds()).padStart(2, '0');
+      relogio.textContent = `${horas}:${minutos}:${segundos}`;
+    }
+  </script>
+</body>
+</html>
