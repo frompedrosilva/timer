@@ -63,7 +63,7 @@ $http_status = isset($_SERVER['REDIRECT_STATUS']) ? intval($_SERVER['REDIRECT_ST
 
 $error_code = isset($error_messages[$http_status]) ? $error_messages[$http_status]['code'] : 'Unknown Error';
 $explanation = isset($error_messages[$http_status]) ? $error_messages[$http_status]['explanation'] : 'An unknown error occurred.';
-$redirect_to = $redirect_url;  // Fixed redirection URL
+$redirect_to = $redirect_url;
 
 ?>
 <!DOCTYPE html>

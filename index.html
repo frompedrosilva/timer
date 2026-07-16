@@ -41,16 +41,14 @@
     const relogio = document.getElementById('relogio');
 
     btn.addEventListener('click', () => {
-      // Pedir fullscreen
       if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen();
-      } else if (document.documentElement.webkitRequestFullscreen) { /* Safari */
+      } else if (document.documentElement.webkitRequestFullscreen) {
         document.documentElement.webkitRequestFullscreen();
-      } else if (document.documentElement.msRequestFullscreen) { /* IE11 */
+      } else if (document.documentElement.msRequestFullscreen) {
         document.documentElement.msRequestFullscreen();
       }
 
-      // Mostrar relógio e esconder botão
       btn.style.display = 'none';
       relogio.style.display = 'block';
       atualizarRelogio();
