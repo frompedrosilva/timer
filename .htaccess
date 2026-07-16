@@ -1,0 +1,26 @@
+# -----------------------
+# Páginas de erro personalizadas
+# -----------------------
+ErrorDocument 400 /error/error.php
+ErrorDocument 401 /error/error.php
+ErrorDocument 403 /error/error.php
+ErrorDocument 404 /error/error.php
+ErrorDocument 405 /error/error.php
+ErrorDocument 408 /error/error.php
+ErrorDocument 429 /error/error.php
+ErrorDocument 500 /error/error.php
+ErrorDocument 501 /error/error.php
+ErrorDocument 502 /error/error.php
+ErrorDocument 503 /modules/maintenance
+ErrorDocument 504 /error/error.php
+ErrorDocument 505 /error/error.php
+
+
+# Indicar retry após 1 hora
+Header always set Retry-After "3600"
+
+# -----------------------
+# Forçar HTTPS
+# -----------------------
+RewriteCond %{ENV:HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
