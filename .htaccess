@@ -1,21 +1,59 @@
 # -----------------------
-ErrorDocument 400 /error.php
-ErrorDocument 401 /error.php
-ErrorDocument 403 /error.php
-ErrorDocument 404 /error.php
-ErrorDocument 405 /error.php
-ErrorDocument 408 /error.php
-ErrorDocument 429 /error.php
-ErrorDocument 500 /error.php
-ErrorDocument 501 /error.php
-ErrorDocument 502 /error.php
-ErrorDocument 503 /error.php
-ErrorDocument 504 /error.php
-ErrorDocument 505 /error.php
+# Desativar listagem de diretórios
+# -----------------------
+Options -Indexes
 
 # -----------------------
+# Páginas de erro personalizadas
+# -----------------------
+ErrorDocument 400 /error/error.php
+ErrorDocument 401 /error/error.php
+ErrorDocument 403 /error/error.php
+ErrorDocument 404 /error/error.php
+ErrorDocument 405 /error/error.php
+ErrorDocument 408 /error/error.php
+ErrorDocument 429 /error/error.php
+ErrorDocument 500 /error/error.php
+ErrorDocument 501 /error/error.php
+ErrorDocument 502 /error/error.php
+ErrorDocument 503 /modules/maintenance.html
+ErrorDocument 504 /error/error.php
+ErrorDocument 505 /error/error.php
+
+# -----------------------
+# Ativar mod_rewrite
+# -----------------------
+RewriteEngine On
+
+# -----------------------
+# Forçar HTTPS
+# -----------------------
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# -----------------------
+# Modo manutenção
+# -----------------------
+SetEnvIf Request_URI "^" MANUTENCAO=false
+
+# Rotas ignoradas durante manutenção
+RewriteCond %{REQUEST_URI} ^/(auth|modules|assets|database|api) [NC]
+RewriteRule ^ - [L]
+
+# Redirecionar para página de manutenção
+RewriteCond %{REQUEST_URI} !^/modules/maintenance\.html$
+RewriteCond %{ENV:MANUTENCAO} true
+RewriteRule ^ /modules/maintenance.html [R=503,L]
+
+# Indicar retry após 1 hora
 Header always set Retry-After "3600"
 
 # -----------------------
-RewriteCond %{ENV:HTTPS} !on
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# SPA Routing (React / Frontend)
+# -----------------------
+RewriteCond %{REQUEST_URI} !^/error/
+RewriteCond %{REQUEST_URI} !^/assets/
+RewriteCond %{REQUEST_URI} !\.(js|css|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|map)$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L,R=404]

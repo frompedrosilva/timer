@@ -63,7 +63,7 @@ $http_status = isset($_SERVER['REDIRECT_STATUS']) ? intval($_SERVER['REDIRECT_ST
 
 $error_code = isset($error_messages[$http_status]) ? $error_messages[$http_status]['code'] : 'Unknown Error';
 $explanation = isset($error_messages[$http_status]) ? $error_messages[$http_status]['explanation'] : 'An unknown error occurred.';
-$redirect_to = $redirect_url;
+$redirect_to = $redirect_url;  // Fixed redirection URL
 
 ?>
 <!DOCTYPE html>
@@ -72,7 +72,7 @@ $redirect_to = $redirect_url;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error: <?php echo $error_code; ?></title>
-    <link rel="icon" href="./favicon.png" />
+    <link rel="icon" href="../assets/img/favicon.png" />
     <style>
         body {
             background: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHVpNWozaHJhcDFkbjRtMDVkOWwxcmJ5OTVxZWNrZmR3ejNuYzd3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tn33aiTi1jkl6H6/giphy.webp') no-repeat center center fixed;
@@ -119,7 +119,7 @@ $redirect_to = $redirect_url;
         .footer {
             margin-top: 20px;
             font-size: 14px;
-            color: #777;
+            color: #fff;
         }
     </style>
     <?php if ($http_status !== 0): ?>
@@ -128,7 +128,7 @@ $redirect_to = $redirect_url;
 </head>
 <body>
     <div class="container">
-        <h1>Error Code: <?php echo $error_code; ?></h1>
+        <h1>Error Code: <br> <?php echo $error_code; ?></h1>
         <br>
         <p><?php echo $explanation; ?></p>
         <hr>
